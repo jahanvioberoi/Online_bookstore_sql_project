@@ -62,79 +62,80 @@ CREATE TABLE Orders(
 
 ## Business Problems and Solutions
 
-  1) List all Fiction books
+
+ # 1) List all Fiction books
  SELECT * FROM Books WHERE Genre = 'Fiction';
  
- 2) Find books published after 1950
+ # 2) Find books published after 1950
  SELECT * FROM Books WHERE Published_Year > 1950;
 
- 3) Show all customers from Canada
+# 3) Show all customers from Canada
  SELECT * FROM Customers WHERE Country = 'Canada';
 
-4) Display orders placed in November 2023
+# 4) Display orders placed in November 2023
 SELECT * FROM Orders WHERE Order_Date BETWEEN '2023-11-01' AND '2023-11-30';
 
-5) Calculate total stock of books
+# 5) Calculate total stock of books
 SELECT SUM(Stock) AS Total_Stock FROM Books;
 
- 6) Identify the most expensive book
+ # 6) Identify the most expensive book
 SELECT * FROM Books ORDER BY Price DESC LIMIT 1;
 
- 7) Show customers ordering more than 1 quantity
+ # 7) Show customers ordering more than 1 quantity
 SELECT * FROM Orders WHERE Quantity > 1;
 
- 8) Retrieve orders with total amount greater than $20
+ # 8) Retrieve orders with total amount greater than $20
 SELECT * FROM Orders WHERE Total_Amount > 20;
 
- 9) List all available genres
+ # 9) List all available genres
 SELECT DISTINCT Genre FROM Books;
 
- 10) Find the book with the lowest stock
+ # 10) Find the book with the lowest stock
 SELECT * FROM Books ORDER BY Stock ASC LIMIT 1;
 
- 11) Calculate total revenue generated
+ # 11) Calculate total revenue generated
 SELECT SUM(Total_Amount) AS Total_Revenue FROM Orders;
 
- 12) Identify the most sold genre
+ # 12) Identify the most sold genre
 SELECT b.Genre, SUM(o.Quantity) AS Total_Sold
 FROM Orders o
 JOIN Books b ON o.Book_ID = b.Book_ID
 GROUP BY b.Genre
 ORDER BY Total_Sold DESC;
 
- 13) List customers with at least 2 orders
+ # 13) List customers with at least 2 orders
 SELECT Customer_ID, COUNT(Order_ID) AS Order_Count
 FROM Orders
 GROUP BY Customer_ID
 HAVING COUNT(Order_ID) >= 2;
 
- 14) Find the most frequently ordered book
+ # 14) Find the most frequently ordered book
 SELECT Book_ID, COUNT(Order_ID) AS Order_Count
 FROM Orders
 GROUP BY Book_ID
 ORDER BY Order_Count DESC
 LIMIT 1;
 
- 15) Show top 3 Fantasy books by price
+ # 15) Show top 3 Fantasy books by price
 SELECT * FROM Books
 WHERE Genre = 'Fantasy'
 ORDER BY Price DESC
 LIMIT 3;
 
- 16) Retrieve total quantity sold by each author
+ # 16) Retrieve total quantity sold by each author
 SELECT b.Author, SUM(o.Quantity) AS Total_Sold
 FROM Orders o
 JOIN Books b ON o.Book_ID = b.Book_ID
 GROUP BY b.Author;
 
- 17) List cities of customers spending more than $30
+ # 17) List cities of customers spending more than $30
 SELECT DISTINCT c.City, SUM(o.Total_Amount) AS Total_Spending
 FROM Orders o
 JOIN Customers c ON o.Customer_ID = c.Customer_ID
 GROUP BY c.City
 HAVING SUM(o.Total_Amount) > 30;
 
- 18) Find the customer who spent the most overall
+ # 18) Find the customer who spent the most overall
 SELECT c.Name, SUM(o.Total_Amount) AS Total_Spent
 FROM Orders o
 JOIN Customers c ON o.Customer_ID = c.Customer_ID
@@ -142,7 +143,7 @@ GROUP BY c.Name
 ORDER BY Total_Spent DESC
 LIMIT 1;
 
- 19) Calculate remaining stock after sales
+ # 19) Calculate remaining stock after sales
 SELECT b.Book_ID, b.Title, b.Stock, 
        COALESCE(SUM(o.Quantity), 0) AS Sold, 
        b.Stock - COALESCE(SUM(o.Quantity), 0) AS Remaining_Stock
